@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- {{ message }} -->
+	 <div>
+		 <p>Datum i vrijeme:</p>
+		 <p>{{ datumIVrijeme }}</p>
+	 </div>
+	 <div>
+		<p>Prognoza vremena:</p>
+		<p>{{ prognozaVremena }}</p>
+	</div>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data() {
+			return {
+				message: 'Hello Vue!',
+				datumIVrijeme: "",
+				prognozaVremena: "",
+			}
+      },
+		async mounted() {
+			const datum = await fetch('/datum');
+			this.datumIVrijeme = await datum.text();
+			const prognoza = await fetch('/prognoza');
+			this.prognozaVremena = await prognoza.text();
+		}
+    })
+  </script>
+</body>
+</html>
